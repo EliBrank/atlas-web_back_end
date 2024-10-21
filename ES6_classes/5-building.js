@@ -4,7 +4,7 @@ export default class Building {
 
     // allows instantion of Building class but not classes which
     // extend Building without redefining evacuationWarningMessage method
-    if (this.constructor !== Building && !this.hasOwnProperty('evacuationWarningMessage')) {
+    if (this.constructor !== Building && (this.evacuationWarningMessage === undefined)) {
       throw new Error('Class extending Building must override evacuationWarningMessage');
     }
   }
