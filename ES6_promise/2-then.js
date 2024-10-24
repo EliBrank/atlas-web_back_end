@@ -3,11 +3,10 @@ export default async function handleResponseFromAPI(promise) {
     const success = await promise;
     return {
       status: 200,
-      data: success,
+      body: success,
     };
   } catch (error) {
     return {
-      success: false,
       error: {},
     };
   } finally {
