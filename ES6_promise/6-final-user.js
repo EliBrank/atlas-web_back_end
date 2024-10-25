@@ -8,6 +8,6 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
     .then((results) => results.map((result) => ({
       status: result.status,
       // assign value or error to key depending on status
-      value: result.status === 'fulfilled' ? result.value : result.reason.message,
+      value: result.status === 'fulfilled' ? result.value : `Error: ${result.reason.message}`,
     })));
 }
