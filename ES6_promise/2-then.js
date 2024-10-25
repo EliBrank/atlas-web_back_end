@@ -1,15 +1,13 @@
-export default async function handleResponseFromAPI(promise) {
-  try {
-    const success = await promise;
-    return {
+export default function handleResponseFromAPI(promise) {
+  return promise
+    .then((success) => ({
       status: 200,
       body: success,
-    };
-  } catch (error) {
-    return {
+    }))
+    .catch(() => ({
       error: {},
-    };
-  } finally {
-    console.log('Got a response from the API');
-  }
+    }))
+    .finally(() => {
+      console.log('Got a response from the API');
+    });
 }
