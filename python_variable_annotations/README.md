@@ -9,7 +9,7 @@ This project explores Python's capabilities for strongly typed declarations. It 
 
 | Filename | Description |
 | -------- | ----------- |
-| 0-add.py | 
+| 0-add.py | Calculates the sum of two floats |
 | 1-concat.py | 
 | 2-floor.py | 
 | 3-to_str.py | 

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-def add(a: int, b: int) -> int:
-    """Calculates the sum of two numbers
+"""Defines add function"""
+
+def add(a: float, b: float) -> float:
+    """Calculates the sum of two floats
 
     Args:
         a: first value
