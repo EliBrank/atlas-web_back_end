@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+from typing import List
+
 """Defines sum_list function"""
 
 
-def sum_list(input_list: list[float]) -> float:
+def sum_list(input_list: List[float]) -> float:
     """Adds together all values in a list
 
     Args:
