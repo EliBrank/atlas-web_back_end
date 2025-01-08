@@ -4,6 +4,7 @@ from typing import Callable
 
 """Defines make_multiplier function"""
 
+
 # the Callable type hint has this format: Callable[[param_type], return_type]
 def make_multiplier(multiplier: float) -> Callable[[float], float]:
     """Creates function which multiplies input by multiplier
