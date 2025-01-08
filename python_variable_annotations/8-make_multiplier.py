@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from typing import Callable
-
 """Defines make_multiplier function"""
+
+from typing import Callable
 
 
 # the Callable type hint has this format: Callable[[param_type], return_type]

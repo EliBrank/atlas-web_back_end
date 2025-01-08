@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-from typing import Tuple, Union
-
 """Defines to_kv function"""
 
+from typing import Tuple, Union
 
-def to_kv(k: str, v: Union[float, int]) -> Tuple[str, float]:
+
+def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """Squares input value and assigns it to a key/value pair
 
     Args:
