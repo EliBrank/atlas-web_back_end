@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Defines measure_time async function"""
+"""Defines measure_time function"""
 
 import asyncio
 from time import time
