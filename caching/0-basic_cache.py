@@ -16,11 +16,8 @@ class BasicCache(BaseCaching):
         """add an item in the cache"""
         if not (key and item):
             return
-        self.cache_data[key] = item
+        self.cache_data.update({key: item})
 
     def get(self, key):
         """get an item via its key"""
-        if not key or key not in self.cache_data:
-            return None
-        else:
-            return self.cache_data[key]
+        return self.cache_data.get(key)
