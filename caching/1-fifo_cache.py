@@ -9,7 +9,7 @@ class FIFOCache(BaseCaching):
     """instantiates a caching system with FIFO"""
 
     def __init__(self):
-        """Instantiates BasicCache with cache_data from BaseCaching"""
+        """Instantiates FIFOCache with cache_data from BaseCaching"""
         super().__init__()
         self.queue = []
 
