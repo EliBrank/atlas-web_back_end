@@ -20,9 +20,9 @@ class LRUCache(BaseCaching):
         if key in self.cache_data:
             self.usage_queue.remove(key)
         elif len(self.cache_data) >= self.MAX_ITEMS:
-            recently_used_key = self.usage_queue.pop(0)
-            del self.cache_data[recently_used_key]
-            print(f"DISCARD: {recently_used_key}")
+            least_recently_used_key = self.usage_queue.pop(0)
+            del self.cache_data[least_recently_used_key]
+            print(f"DISCARD: {least_recently_used_key}")
         self.usage_queue.append(key)
 
         self.cache_data.update({key: item})
