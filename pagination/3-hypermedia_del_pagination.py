@@ -34,8 +34,7 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int | None = None,
-                        page_size: int = 10) -> dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> dict:
         """Retrieves various information for dataset page (deletion resilient)
 
         Args:
