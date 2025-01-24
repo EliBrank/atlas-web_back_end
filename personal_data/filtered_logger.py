@@ -30,6 +30,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 def get_logger() -> logging.Logger:
+    """Creates logging object to handle data from csv"""
     logger: logging.Logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
