@@ -48,22 +48,18 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db():
     """Set up mysql database with csv info"""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME")
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
     host_name = os.getenv("PERSONAL_DATA_DB_HOST")
     db_name = os.getenv("PERSONAL_DATA_DB_NAME")
 
-    connections: dict = {
-        "user": user,
-        "password": password,
-        "host": host_name,
-        "database": db_name
-    }
-
-    connector_obj = mysql.connector.connection.MySQLConnection(
-        mysql.connector.connect(**connections)
+    connector_obj = mysql.connector.connect(
+        user=user,
+        password=password,
+        host=host_name,
+        database=db_name
     )
 
     return connector_obj
