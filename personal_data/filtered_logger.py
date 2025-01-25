@@ -7,7 +7,6 @@ from typing import List
 import logging
 import os
 import mysql.connector
-from mysql.connector.cursor_cext import CMySQLCursor
 from mysql.connector.connection import MySQLConnection
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -90,7 +89,7 @@ def main():
     """Sets up logger, navigates through db"""
     logger: logging.Logger = get_logger()
     db: MySQLConnection = get_db()
-    cursor: CMySQLCursor = db.cursor(dictionary=True)
+    cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users")
     for row in cursor:
         preformatted_fields: list = []
