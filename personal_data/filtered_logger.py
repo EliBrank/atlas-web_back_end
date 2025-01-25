@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Creates filter_datum function"""
+"""Handles data setup, filtering, logging"""
 
 import re
 from typing import List
