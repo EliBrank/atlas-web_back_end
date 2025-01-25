@@ -48,8 +48,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> (mysql.connector.CMySQLConnection |
-    mysql.connector.connection.MySQLConnection):
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """Set up mysql database"""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
     # development password is pw
