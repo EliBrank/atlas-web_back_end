@@ -3,10 +3,11 @@
 """
 from flask import jsonify, abort, Response
 from api.v1.views import app_views
+from typing import Union
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
-def status() -> str | Response:
+def status() -> Union[str, Response]:
     """ GET /api/v1/status
     Return:
       - the status of the API
@@ -15,7 +16,7 @@ def status() -> str | Response:
 
 
 @app_views.route('/stats/', strict_slashes=False)
-def stats() -> str | Response:
+def stats() -> Union[str, Response]:
     """ GET /api/v1/stats
     Return:
       - the number of each objects
