@@ -26,6 +26,7 @@ def stats() -> Union[str, Response]:
     stats['users'] = User.count()
     return jsonify(stats)
 
+
 @app_views.route('/unauthorized')
 def unauthorized() -> str:
     """ GET /api/v1/unauthorized
