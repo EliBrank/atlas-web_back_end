@@ -7,6 +7,8 @@ from typing import List
 import logging
 import os
 import mysql.connector
+from mysql.connector.cursor_cext import CMySQLCursor
+from mysql.connector.connection import MySQLConnection
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -32,7 +34,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 def get_logger() -> logging.Logger:
-    """Creates logging object to handle data from csv"""
+    """Creates logging object to handle data"""
     logger: logging.Logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
@@ -48,11 +50,11 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> MySQLConnection:
     """Set up mysql database"""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
     # development password is pw
-    password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "pw")
     host_name = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
     db_name = os.getenv("PERSONAL_DATA_DB_NAME", "my_db")
 
@@ -82,3 +84,23 @@ class RedactingFormatter(logging.Formatter):
         message_formatted: str = super().format(record)
         return filter_datum(self.fields, self.REDACTION,
                             message_formatted, self.SEPARATOR)
+
+
+def main():
+    """Sets up logger, navigates through db"""
+    logger: logging.Logger = get_logger()
+    db: MySQLConnection = get_db()
+    cursor: CMySQLCursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users")
+    for row in cursor:
+        preformatted_fields: list = []
+        for key, value in row.items():
+            preformatted_fields.append(f"{key}={value}")
+        entry: str = "; ".join(preformatted_fields)
+        logger.info(entry)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
