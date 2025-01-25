@@ -14,6 +14,12 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Specifies auth requirement for endpoint
         """
+        if not path or not excluded_paths:
+            return True
+        if path[-1] != "/":
+            path += "/"
+            if path not in excluded_paths:
+                return True
         return False
 
     def authorization_header(self, request=None) -> str:
