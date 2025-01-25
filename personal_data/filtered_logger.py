@@ -7,7 +7,6 @@ from typing import List
 import logging
 import os
 import mysql.connector
-from mysql.connector.connection import MySQLConnection
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -49,7 +48,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> MySQLConnection:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """Set up mysql database"""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
     # development password is pw
@@ -88,7 +87,7 @@ class RedactingFormatter(logging.Formatter):
 def main():
     """Sets up logger, navigates through db"""
     logger: logging.Logger = get_logger()
-    db: MySQLConnection = get_db()
+    db: mysql.connector.connection.MySQLConnection = get_db()
     cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users")
     for row in cursor:
