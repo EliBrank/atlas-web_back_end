@@ -48,7 +48,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """Set up mysql database with csv info"""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME")
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
@@ -61,6 +61,10 @@ def get_db():
         host=host_name,
         database=db_name
     )
+
+    assert isinstance(connector_obj,
+                      mysql.connector.connection.MySQLConnection), \
+                      "Connection is not a MySQLConnection"
 
     return connector_obj
 
