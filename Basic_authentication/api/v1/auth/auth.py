@@ -22,10 +22,11 @@ class Auth:
             return True
         return False
 
-    def authorization_header(self, request=None) -> str:
+    def authorization_header(self, request=None) -> str | None:
         """Gets authorization header
         """
-        return None  # pyright: ignore
+        if not request:
+            return None
 
     def current_user(self, request=None) -> TypeVar("User"):  # pyright: ignore
         """Gets user
