@@ -54,10 +54,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
     host_name = os.getenv("PERSONAL_DATA_DB_HOST")
     db_name = os.getenv("PERSONAL_DATA_DB_NAME")
-    # print(f"user: {user}")
-    # print(f"password: {password}")
-    # print(f"host: {host_name}")
-    # print(f"db: {db_name}")
 
     connections: dict = {
         "user": user,
@@ -66,10 +62,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         "database": db_name
     }
 
-    connector_obj: mysql.connector.connection.MySQLConnection = \
-        mysql.connector.connection.MySQLConnection(
-            mysql.connector.connect(**connections)
-        )
+    connector_obj = mysql.connector.connection.MySQLConnection(
+        mysql.connector.connect(**connections)
+    )
 
     return connector_obj
 
