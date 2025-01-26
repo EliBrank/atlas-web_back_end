@@ -33,3 +33,10 @@ class Auth:
         """Gets user
         """
         return None  # pyright: ignore
+
+
+class BasicAuth(Auth):
+    """
+    BasicAuth authenication implementation
+    """
+    pass
