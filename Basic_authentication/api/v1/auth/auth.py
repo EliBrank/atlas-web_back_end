@@ -4,7 +4,7 @@ Auth module
 """
 
 from flask import request
-from typing import List, TypeVar
+from typing import List, TypeVar, Union
 
 
 class Auth:
@@ -22,7 +22,7 @@ class Auth:
             return True
         return False
 
-    def authorization_header(self, request=None) -> str | None:
+    def authorization_header(self, request=None) -> Union[str, None]:
         """Gets authorization header
         """
         if not request or "Authorization" not in request.headers:
