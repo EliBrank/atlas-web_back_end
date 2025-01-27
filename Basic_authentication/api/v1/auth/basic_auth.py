@@ -109,7 +109,7 @@ class BasicAuth(Auth):
 
         user: Optional[User] = (
             self.user_object_from_credentials(*credentials)
-            if credentials 
+            if credentials
             and credentials[0] is not None
             and credentials[1] is not None
             else None
