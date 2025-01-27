@@ -7,7 +7,6 @@ from api.v1.auth.auth import Auth
 from typing import Union
 import base64
 import binascii
-import sys
 
 
 class BasicAuth(Auth):
@@ -49,3 +48,19 @@ class BasicAuth(Auth):
             return
 
         return decoded_string
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str
+    ) -> tuple[Union[str, None], Union[str, None]]:
+        """Gets user email, password from request header
+        """
+        if (
+            not decoded_base64_authorization_header
+            or not isinstance(decoded_base64_authorization_header, str)
+            or ":" not in decoded_base64_authorization_header
+        ):
+            return (None, None)
+
+        email, password = decoded_base64_authorization_header.split(":", 2)
+
+        return (email, password)
