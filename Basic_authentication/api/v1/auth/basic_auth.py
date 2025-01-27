@@ -7,6 +7,7 @@ from api.v1.auth.auth import Auth
 from typing import Union
 import base64
 import binascii
+from api.v1.views.users import User
 
 
 class BasicAuth(Auth):
@@ -64,3 +65,25 @@ class BasicAuth(Auth):
         email, password = decoded_base64_authorization_header.split(":", 2)
 
         return (email, password)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str
+    ) -> Union[User, None]:
+        """Gets user object from credentials
+        """
+        if (
+            not user_email
+            or not user_pwd
+            or not isinstance(user_email, str)
+            or not isinstance(user_pwd, str)
+        ):
+            return
+
+        users: list[User] = User.search({"email": user_email})
+        if not users:
+            return
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
+
+        return

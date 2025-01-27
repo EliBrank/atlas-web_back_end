@@ -22,7 +22,7 @@ class User(Base):
     def password(self) -> str:
         """ Getter of the password
         """
-        return self._password
+        return self._password  # pyright: ignore
 
     @password.setter
     def password(self, pwd: str):
