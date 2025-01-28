@@ -4,7 +4,7 @@ BasicAuth module
 """
 
 from api.v1.auth.auth import Auth
-from typing import Optional, Optional
+from typing import Optional
 import base64
 import binascii
 from api.v1.views.users import User
