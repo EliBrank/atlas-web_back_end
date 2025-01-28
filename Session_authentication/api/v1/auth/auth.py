@@ -3,8 +3,9 @@
 Auth module
 """
 
+import os
 from flask import request
-from typing import List, TypeVar, Union
+from typing import List, Optional, TypeVar, Union
 
 
 class Auth:
@@ -32,4 +33,14 @@ class Auth:
     def current_user(self, request=None) -> TypeVar("User"):  # pyright: ignore
         """Gets user
         """
-        return None  # pyright: ignore
+        return None  # type: ignore
+
+    def session_cookie(self, request=None):
+        """Gets cookie value from request object
+        """
+        if not request:
+            return
+        session: Optional[str] = os.getenv("SESSION_NAME")
+        session_cookie: str = request.cookies.get(session)
+
+        return session_cookie
