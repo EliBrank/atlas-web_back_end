@@ -1,30 +1,15 @@
-"""DB module
+#!/usr/bin/env python3
 """
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
+Main file
+"""
 
-from user import Base
+from db import DB
+from user import User
 
+my_db = DB()
 
-class DB:
-    """DB class
-    """
+user_1 = my_db.add_user("test@test.com", "SuperHashedPwd")
+print(user_1.id)
 
-    def __init__(self) -> None:
-        """Initialize a new DB instance
-        """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
-        Base.metadata.drop_all(self._engine)
-        Base.metadata.create_all(self._engine)
-        self.__session = None
-
-    @property
-    def _session(self) -> Session:
-        """Memoized session object
-        """
-        if self.__session is None:
-            DBSession = sessionmaker(bind=self._engine)
-            self.__session = DBSession()
-        return self.__session
+user_2 = my_db.add_user("test1@test.com", "SuperHashedPwd1")
+print(user_2.id)
