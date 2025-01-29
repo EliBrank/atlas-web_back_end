@@ -1,18 +1,16 @@
-# Basic Authentication (Python)
+# User Authentication Service (Python)
 
-As an exercise, this project explores a basic implementation of authentication in Python. Subtopics covered include:
-  - What authentication means
-  - What Base64 is
-  - How to encode a string in Base64
-  - What Basic authentication means
-  - How to send the Authorization header
+This project revolves around implementing user authentication in Python, with particular attention to the following topics:
+  - How to declare API routes in a Flask app
+  - Getting/Setting cookies
+  - How to retrieve request form data
+  - How to return various HTTP status codes
 
 ## Files
 
 | Filename | Description |
 | -------- | ----------- |
-| 0-basic_cache.py |  |
-| 1-fifo_cache.py |  |
-| 2-lifo_cache.py |  |
-| 3-lru_cache.py |  |
-| 4-mru_cache.py |  |
+| user.py |  |
+| app.py |  |
+| db.py |  |
+| auth.py |  |
