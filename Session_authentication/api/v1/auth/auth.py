@@ -35,7 +35,7 @@ class Auth:
         """
         return None  # type: ignore
 
-    def session_cookie(self, request=None):
+    def session_cookie(self, request=None) -> Optional[str]:
         """Gets cookie value from request object
         """
         if not request:

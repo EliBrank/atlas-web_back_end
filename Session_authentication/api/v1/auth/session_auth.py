@@ -7,6 +7,8 @@ import uuid
 from api.v1.auth.auth import Auth
 from typing import Optional
 
+from models.user import User
+
 
 class SessionAuth(Auth):
     """
@@ -35,3 +37,14 @@ class SessionAuth(Auth):
         user_id: Optional[str] = self.user_id_by_session_id.get(session_id)
 
         return user_id
+
+    def current_user(self, request=None) -> Optional[User]:
+        """Gets user instance based on request's cookie value
+        """
+        session_cookie: Optional[str] = self.session_cookie(request)
+        user_id: Optional[str] = self.user_id_for_session_id(session_cookie)
+        if not user_id:
+            return
+        user = User.get(user_id)
+
+        return user
