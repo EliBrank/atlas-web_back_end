@@ -6,7 +6,7 @@ from typing import Optional
 
 from flask.typing import ResponseReturnValue
 from api.v1.views import app_views
-from flask import Response, jsonify, request
+from flask import Response, abort, jsonify, request
 from models.user import User
 
 
@@ -14,11 +14,13 @@ from models.user import User
 def user_login() -> ResponseReturnValue:
     """ POST /api/v1/auth_session/login/
     JSON body:
-      - email
-      - password
+        email
+        password
     Return:
-      - User object JSON represented
-      - 400 if can't create the new User
+        User object as JSON,
+        400 if no email or password,
+        401 if wrong password,
+        404 if matching user not in db
     """
     email: Optional[str] = request.form.get("email")
     password: Optional[str] = request.form.get("password")
@@ -42,3 +44,16 @@ def user_login() -> ResponseReturnValue:
 
     # no user in users matched password
     return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'])
+def user_logout() -> ResponseReturnValue:
+    """ DELETE /api/v1/auth/session_auth
+    Return:
+        Empty JSON and code 200 if session correctly deleted,
+        404 if the User ID doesn't exist
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):  # type: ignore
+        abort(404)
+    return jsonify({}), 200
