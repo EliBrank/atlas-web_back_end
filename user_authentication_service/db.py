@@ -48,7 +48,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """Find first user matching key word input
 
         Args:
