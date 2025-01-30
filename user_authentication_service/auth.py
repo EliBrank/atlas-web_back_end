@@ -71,7 +71,7 @@ class Auth:
 
         return False
 
-    def create_session(self, email: str) -> Optional[str]:
+    def create_session(self, email: str) -> str:
         """Creates new session based on input user email
         """
         try:
@@ -83,4 +83,4 @@ class Auth:
         except NoResultFound:
             pass
 
-        return
+        return ""
