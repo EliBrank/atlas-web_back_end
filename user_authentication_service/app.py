@@ -66,13 +66,26 @@ def logout() -> ResponseReturnValue:
     Deletes session for user in database (logout)
     """
     session_id: str = request.cookies.get("session_id") or ""
-    user: Optional[User] = AUTH.get_user_from_session_id(session_id)
+    user: User = AUTH.get_user_from_session_id(session_id)
     if not user:
         abort(403)
     user_id: int = cast(int, user.id)
     AUTH.destroy_session(user_id)
 
     return redirect("/")
+
+
+@app.route("/profile", methods=["GET"])
+def profile() -> ResponseReturnValue:
+    """ GET /profile
+    Gets profile (email) for session
+    """
+    session_id: str = request.cookies.get("session_id") or ""
+    user: User = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":
