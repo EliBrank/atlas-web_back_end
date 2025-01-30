@@ -3,7 +3,7 @@
 """
 Auth module
 """
-from typing import Optional
+from typing import Optional, cast
 import bcrypt
 from db import DB
 from user import User
@@ -77,9 +77,9 @@ class Auth:
         try:
             user: User = self._db.find_user_by(email=email)
             session_id: str = _generate_uuid()
-            # ensure user id is in correct int format
-            user_id: int = user.id.scalar()
+            user_id: int = cast(int, user.id)
             self._db.update_user(user_id, session_id=session_id)
+            return session_id
         except NoResultFound:
             pass
 
