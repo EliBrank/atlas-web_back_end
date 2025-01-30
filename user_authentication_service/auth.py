@@ -13,6 +13,20 @@ except ImportError:
     from sqlalchemy.exc import NoResultFound
 
 
+def _hash_password(password: str) -> bytes:
+    """Creates hash of input password with bcrypt
+
+    Args:
+        password: String to be hashed, salted
+
+    Return:
+        Hashed bytes object from password
+    """
+    pw_bytes: bytes = password.encode("utf-8")
+    salt = bcrypt.gensalt()
+    pw_hashed: bytes = bcrypt.hashpw(pw_bytes, salt)
+
+    return pw_hashed
 
 
 class Auth:
@@ -21,21 +35,6 @@ class Auth:
 
     def __init__(self):
         self._db = DB()
-
-    def _hash_password(self, password: str) -> bytes:
-        """Creates hash of input password with bcrypt
-
-        Args:
-            password: String to be hashed, salted
-
-        Return:
-            Hashed bytes object from password
-        """
-        pw_bytes: bytes = password.encode("utf-8")
-        salt = bcrypt.gensalt()
-        pw_hashed: bytes = bcrypt.hashpw(pw_bytes, salt)
-
-        return pw_hashed
 
     def register_user(self, email: str, password: str) -> User:
         """Creates user object from email, password
@@ -46,5 +45,5 @@ class Auth:
         except NoResultFound:
             pass
 
-        hashed_password: str = str(self._hash_password(password))
+        hashed_password: str = str(_hash_password(password))
         return self._db.add_user(email, hashed_password)
