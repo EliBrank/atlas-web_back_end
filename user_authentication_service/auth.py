@@ -71,3 +71,7 @@ class Auth:
 
         return False
 
+    def create_session(self, email: str) -> str:
+        """Creates new session based on input user email
+        """
+        return ""
