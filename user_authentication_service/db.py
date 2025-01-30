@@ -50,17 +50,31 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """Find first user matching key word input
-
         Args:
             kwargs: keyword arguments for filtering query
-
         Returns:
             first matching User instance
         """
         try:
+            # keyword identifier in kwargs should not be a string
             user = self._session.query(User).filter_by(**kwargs).first()
             if not user:
                 raise NoResultFound
             return user
         except InvalidRequestError:
             raise
+
+    def update_user(self, user_id: int, **kwargs):
+        """Updates given user with key word arguments
+        Args:
+            user_id: ID to retrieve user from DB
+            kwargs: key word arguments to add/change
+        """
+        user: User = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
+
+        self._session.commit()
