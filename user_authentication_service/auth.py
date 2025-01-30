@@ -3,9 +3,10 @@
 """
 Auth module
 """
+from typing import Optional
 import bcrypt
 from db import DB
-from user import Base, User
+from user import User
 import uuid
 try:
     # Older SQLAlchemy
@@ -60,18 +61,26 @@ class Auth:
         """
         try:
             user: User = self._db.find_user_by(email=email)
-            if user:
-                pw_bytes: bytes = password.encode("utf-8")
-                hashed_pw_bytes: bytes = (
-                    user.hashed_password.strip("b\'\'").encode("utf-8")
-                )
-                return bcrypt.checkpw(pw_bytes, hashed_pw_bytes)
+            pw_bytes: bytes = password.encode("utf-8")
+            hashed_pw_bytes: bytes = (
+                user.hashed_password.strip("b\'\'").encode("utf-8")
+            )
+            return bcrypt.checkpw(pw_bytes, hashed_pw_bytes)
         except NoResultFound:
             pass
 
         return False
 
-    def create_session(self, email: str) -> str:
+    def create_session(self, email: str) -> Optional[str]:
         """Creates new session based on input user email
         """
-        return ""
+        try:
+            user: User = self._db.find_user_by(email=email)
+            session_id: str = _generate_uuid()
+            # ensure user id is in correct int format
+            user_id: int = user.id.scalar()
+            self._db.update_user(user_id, session_id=session_id)
+        except NoResultFound:
+            pass
+
+        return
