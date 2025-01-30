@@ -125,7 +125,7 @@ class Auth:
             hashed_password = _hash_password(password)
             self._db.update_user(
                 user_id,
-                reset_token=reset_token,
+                reset_token=None,
                 hashed_password=hashed_password
             )
         except NoResultFound:
