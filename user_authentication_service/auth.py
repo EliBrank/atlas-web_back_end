@@ -6,6 +6,7 @@ Auth module
 import bcrypt
 from db import DB
 from user import Base, User
+import uuid
 try:
     # Older SQLAlchemy
     from sqlalchemy.orm.exc import NoResultFound  # pyright: ignore
@@ -27,6 +28,12 @@ def _hash_password(password: str) -> bytes:
     pw_hashed: bytes = bcrypt.hashpw(pw_bytes, salt)
 
     return pw_hashed
+
+
+def _generate_uuid() -> str:
+    """Creates UUID
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -63,3 +70,4 @@ class Auth:
             pass
 
         return False
+
