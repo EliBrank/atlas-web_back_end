@@ -2,10 +2,11 @@
 """
 Basic Flask app module
 """
-from typing import Optional
-from flask import Flask, jsonify, abort, request
+from typing import Optional, cast
+from flask import Flask, jsonify, abort, redirect, request
 from flask.typing import ResponseReturnValue
 from auth import Auth
+from user import User
 
 AUTH = Auth()
 app = Flask(__name__)
@@ -57,6 +58,21 @@ def login() -> ResponseReturnValue:
     response.set_cookie("session_id", session_id)
 
     return response
+
+
+@app.route("/sessions", methods=["DELETE"])
+def logout() -> ResponseReturnValue:
+    """ DELETE /sessions
+    Deletes session for user in database (logout)
+    """
+    session_id: str = request.cookies.get("session_id") or ""
+    user: Optional[User] = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    user_id: int = cast(int, user.id)
+    AUTH.destroy_session(user_id)
+
+    return redirect("/")
 
 
 if __name__ == "__main__":
