@@ -106,7 +106,7 @@ class Auth:
 
         return None
 
-    def get_reset_password_token(self, email: str) -> Optional[str]:
+    def get_reset_password_token(self, email: str) -> str:
         """Create reset token (UUID) for user
         """
         try:
@@ -114,5 +114,6 @@ class Auth:
             user_id: int = cast(int, user.id)
             reset_token: str = _generate_uuid()
             self._db.update_user(user_id, reset_token=reset_token)
+            return reset_token
         except NoResultFound:
             raise ValueError
