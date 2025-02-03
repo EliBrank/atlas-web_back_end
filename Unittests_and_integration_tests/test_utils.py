@@ -1,4 +1,4 @@
-#!/bin/bin/env python3
+#!/usr/bin/env python3
 
 from typing import Any, Mapping, Sequence
 from utils import access_nested_map
