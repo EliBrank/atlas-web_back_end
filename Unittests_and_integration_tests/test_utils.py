@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from typing import Any, Mapping, Sequence
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 import unittest
 from unittest.mock import Mock, patch
 from parameterized import parameterized
@@ -54,3 +54,28 @@ class TestGetJson(unittest.TestCase):
 
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """Test suite for memoize
+    """
+    class TestClass:
+
+        def a_method(self):
+            return 42
+
+        @memoize
+        def a_property(self):
+            return self.a_method()
+
+    @patch.object(TestClass, "a_method")
+    def test_memoize(self, mock_a_method):
+        """test memoize for single a_method call
+        """
+        mock_a_method.return_value = 42
+        test_object = self.TestClass()
+        result_1 = test_object.a_property
+        result_2 = test_object.a_property
+
+        mock_a_method.assert_called_once()
+        self.assertEqual(result_1, result_2)
