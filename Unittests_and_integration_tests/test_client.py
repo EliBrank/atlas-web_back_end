@@ -8,7 +8,7 @@ from typing import Any, Mapping, Sequence
 from unittest import mock
 from client import GithubOrgClient
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, PropertyMock, patch
 from parameterized import parameterized
 
 
@@ -30,3 +30,17 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.assert_called_once_with(
             GithubOrgClient.ORG_URL.format(org=org_url)
         )
+
+    def test_public_repos_url(self):
+        """Tests that _public_repos_url returns mocked payload
+        """
+        # example JSON return from org containing repos_url key
+        known_payload: dict = {"repos_url": "https://example.com/test"}
+        with patch.object(
+            GithubOrgClient, "org", new_callable=PropertyMock
+        ) as mock_org:
+            mock_org.return_value = known_payload
+            request = GithubOrgClient("test")
+            result = request._public_repos_url
+
+            self.assertEqual(result, known_payload["repos_url"])
