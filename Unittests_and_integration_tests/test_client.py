@@ -4,11 +4,9 @@
 Tests for functions in client module
 """
 
-from typing import Any, Mapping, Sequence
-from unittest import mock
 from client import GithubOrgClient
 import unittest
-from unittest.mock import Mock, PropertyMock, patch
+from unittest.mock import PropertyMock, patch
 from parameterized import parameterized
 
 
@@ -65,3 +63,16 @@ class TestGithubOrgClient(unittest.TestCase):
 
             self.assertEqual(result, [site_name_1, site_name_2])
             mock_get_json.assert_called_once()
+
+    @parameterized.expand([
+        # (repo, license, expected)
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+    ])
+    def test_has_license(self, repo, license, expected):
+        """Tests has_license output for matching/invalid license keys
+        """
+        request = GithubOrgClient("test")
+        repo_has_license: bool = request.has_license(repo, license)
+
+        self.assertEqual(repo_has_license, expected)
