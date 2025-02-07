@@ -21,4 +21,3 @@ These files center around testing in Python. In particular, these are designed t
 | -------- | ----------- |
 | test_utils.py | provided |
 | test_client.py | provided |
-| test_fixtures.py | provided |
