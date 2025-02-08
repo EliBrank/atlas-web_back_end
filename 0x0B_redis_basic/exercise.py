@@ -6,6 +6,7 @@ Main exercise module
 
 import redis
 from uuid import uuid4
+from typing import Union
 
 
 class Cache():
@@ -15,7 +16,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data: str | bytes | int | float) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """Saves input data to database with generated uuid key
         """
         generated_key: str = str(uuid4())
