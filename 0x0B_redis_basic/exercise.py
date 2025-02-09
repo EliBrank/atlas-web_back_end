@@ -6,7 +6,7 @@ Main exercise module
 
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Callable, Optional, Union
 
 
 class Cache():
@@ -23,3 +23,16 @@ class Cache():
         self._redis.set(generated_key, data)
 
         return generated_key
+
+    def get(
+        self, key: str, fn: Optional[Callable]
+    ) -> Optional[Union[str, bytes, int, float]]:
+        """Retrieves value from cache
+        Args:
+            key: String used to fetch value
+            fn: Optional function to convert
+        Returns:
+            Value stored in input key, if any
+        """
+        value_bytes = self._redis.get(key)
+        return ""

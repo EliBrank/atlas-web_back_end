@@ -4,6 +4,8 @@
 Main exercise module
 """
 
+Cache = __import__('exercise').Cache
+
 cache = Cache()
 
 TEST_CASES = {
