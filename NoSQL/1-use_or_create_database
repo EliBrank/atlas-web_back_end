@@ -1,0 +1,2 @@
+// Selects my_db database (creates if doesn't exist)
+use my_db
