@@ -1,3 +1,2 @@
 // Add document to school collection with name of "Holberton school"
-db.dropDatabase()
 db.school.insertOne({ name: "Holberton school" })
