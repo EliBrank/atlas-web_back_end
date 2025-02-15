@@ -38,3 +38,13 @@ class Cache():
         if value_bytes and fn:
             return fn(value_bytes)
         return value_bytes  # pyright: ignore
+
+    def get_str(self, data: bytes) -> str:
+        """Returns given data as a string
+        """
+        return str(data)
+
+    def get_int(self, data: bytes) -> int:
+        """Returns given data as an integer
+        """
+        return int(data)
