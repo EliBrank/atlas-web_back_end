@@ -25,7 +25,7 @@ class Cache():
         return generated_key
 
     def get(
-        self, key: str, fn: Optional[Callable]
+        self, key: str, fn: Optional[Callable] = None
     ) -> Optional[Union[str, bytes, int, float]]:
         """Retrieves value from cache
         Args:
