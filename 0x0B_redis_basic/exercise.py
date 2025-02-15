@@ -35,4 +35,6 @@ class Cache():
             Value stored in input key, if any
         """
         value_bytes = self._redis.get(key)
-        return ""
+        if value_bytes and fn:
+            return fn(value_bytes)
+        return value_bytes  # pyright: ignore
