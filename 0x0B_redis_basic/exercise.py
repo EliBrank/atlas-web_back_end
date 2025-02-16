@@ -7,6 +7,20 @@ Main exercise module
 import redis
 from uuid import uuid4
 from typing import Callable, Optional, Union
+from functools import wraps
+
+
+def count_calls(method: Callable) -> Callable:
+    """Decorator to count calls to decorated function
+    """
+    @wraps(method)
+    # self is still assumed first argument because of use with class
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        self._redis.incr(key)
+        # actual call to original method
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache():
@@ -16,6 +30,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Saves input data to database with generated uuid key
         """
