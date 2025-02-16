@@ -14,10 +14,8 @@ def count_calls(method: Callable) -> Callable:
     """Decorator to count calls to decorated function
     """
     @wraps(method)
-    # self is still assumed first argument because of use with class
     def wrapper(self, *args, **kwargs):
         self._redis.incr(method.__qualname__)
-        # actual call to original method
         return method(self, *args, **kwargs)
     return wrapper
 
