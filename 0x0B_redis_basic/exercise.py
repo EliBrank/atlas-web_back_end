@@ -16,8 +16,7 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     # self is still assumed first argument because of use with class
     def wrapper(self, *args, **kwargs):
-        key = method.__qualname__
-        self._redis.incr(key)
+        self._redis.incr(method.__qualname__)
         # actual call to original method
         return method(self, *args, **kwargs)
     return wrapper
