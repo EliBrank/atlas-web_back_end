@@ -8,6 +8,7 @@ import redis
 from uuid import uuid4
 from typing import Callable, Optional, Union
 from functools import wraps
+import inspect
 
 
 def count_calls(method: Callable) -> Callable:
@@ -35,6 +36,31 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(outputs_key, output_value)
         return output_value
     return wrapper
+
+
+def replay(method: Callable) -> None:
+    """Displays information logged via call_history/count_calls
+    """
+    # check to make sure method has __self__
+    if not hasattr(method, "__self__"):
+        raise TypeError("Expected bound method")
+    instance = method.__self__  # pyright: ignore
+
+    # use short circuit for None case since int() can't convert None
+    call_count = instance._redis.get(method.__qualname__) or 0
+    call_count = int(call_count)
+
+    print(f"{method.__qualname__} was called {call_count} "
+          f"time{'s' if call_count != 1 else ''}:")
+
+    inputs_key: str = f"{method.__qualname__}:inputs"
+    outputs_key: str = f"{method.__qualname__}:outputs"
+    inputs = instance._redis.lrange(inputs_key, 0, -1)
+    outputs = instance._redis.lrange(outputs_key, 0, -1)
+
+    for input, output in zip(inputs, outputs):
+        print(f"{method.__qualname__}(*{input.decode('utf-8')}) -> "
+              f"{output.decode('utf-8')}")
 
 
 class Cache():
