@@ -13,4 +13,4 @@ def update_topics(mongo_collection, name, topics):
         { "topics": topics }
     }
 
-    mongo_collection.update_one(query_filter, update_operation)
+    mongo_collection.update_many(query_filter, update_operation)
