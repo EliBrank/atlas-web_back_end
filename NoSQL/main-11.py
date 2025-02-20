@@ -22,3 +22,9 @@ if __name__ == "__main__":
     schools = schools_by_topic(school_collection, "Python")
     for school in schools:
         print("[{}] {} {}".format(school.get('_id'), school.get('name'), school.get('topics', "")))
+
+    print("---")
+
+    schools = schools_by_topic(school_collection, "Cooking")
+    for school in schools:
+        print("[{}] {} {}".format(school.get('_id'), school.get('name'), school.get('topics', "")))
