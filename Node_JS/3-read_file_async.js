@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { parse } from 'csv-parse';
 
-export default async function countStudents(path) {
+export default async function countStudents(path, callback) {
   try {
     const fileContent = await fs.readFile(path, 'utf8');
 
@@ -18,7 +18,7 @@ export default async function countStudents(path) {
       });
     });
 
-    console.log(`Number of students: ${records.length}`);
+    let output = `Number of students: ${records.length}\n`;
     const fields = new Map();
 
     for (const record of records) {
@@ -37,8 +37,16 @@ export default async function countStudents(path) {
     // CS: [Johann, Arielle, Jonathan],
     // SWE: [Guillaume, Joseph, Paul, Tommy]
     for (const [field, students] of fields.entries()) {
-      console.log(`Number of students in ${field}: `
-                + `${students.length}. List: ${students.join(', ')}`);
+      output += `Number of students in ${field}: `
+                + `${students.length}. List: ${students.join(', ')}\n`;
+    }
+
+    output = output.trim();
+
+    if (callback) {
+      callback(output);
+    } else {
+      console.log(output);
     }
   } catch (e) {
     throw new Error('Cannot load the database');

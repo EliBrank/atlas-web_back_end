@@ -27,6 +27,20 @@ module.exports = {
       'LabeledStatement',
       'WithStatement',
     ],
+    'import/extensions': [
+      'error',
+      'ignorePackages', // Ignore extensions for package imports
+      {
+        js: 'always', // Always require .js extension for JavaScript files
+      },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js'], // Resolve .js files
+      },
+    },
   },
   overrides:[
     {
