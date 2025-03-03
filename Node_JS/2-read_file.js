@@ -1,7 +1,7 @@
-const fs = require('fs');
-const { parse } = require('csv-parse/sync');
+import fs from 'fs';
+import { parse } from 'csv-parse/sync';
 
-function countStudents(path) {
+export default function countStudents(path) {
   try {
     const fileContent = fs.readFileSync(path, 'utf8');
 
@@ -36,5 +36,3 @@ function countStudents(path) {
     throw new Error('Cannot load the database');
   }
 }
-
-module.exports = countStudents;

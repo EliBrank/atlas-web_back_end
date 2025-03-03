@@ -1,3 +1,3 @@
-const countStudents = require('./2-read_file');
+import countStudents from './2-read_file.js';
 
-countStudents("database.csv");
+countStudents('database.csv');

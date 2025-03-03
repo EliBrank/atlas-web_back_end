@@ -1,13 +1,21 @@
-const fs = require('fs').promises;
-const { parse } = require('csv-parse');
+import { promises as fs } from 'fs';
+import { parse } from 'csv-parse';
 
-async function countStudents(path) {
+export default async function countStudents(path) {
   try {
     const fileContent = await fs.readFile(path, 'utf8');
 
-    const records = parse(fileContent, {
-      columns: true,
-      skip_empty_lines: true,
+    const records = await new Promise((resolve, reject) => {
+      parse(fileContent, {
+        columns: true,
+        skip_empty_lines: true,
+      }, (err, output) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(output);
+        }
+      });
     });
 
     console.log(`Number of students: ${records.length}`);
@@ -36,5 +44,3 @@ async function countStudents(path) {
     throw new Error('Cannot load the database');
   }
 }
-
-module.exports = countStudents;
