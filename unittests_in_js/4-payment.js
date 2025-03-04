@@ -1,4 +1,4 @@
-const Utils = require('./utils.js'); // Use destructuring and correct relative path
+const Utils = require('./utils.js');
 const sinon = require("sinon");
 
 function sendPaymentRequestToApi(totalAmount, totalShipping) {
