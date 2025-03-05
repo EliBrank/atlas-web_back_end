@@ -1,5 +1,5 @@
 const sandbox = require('sinon').createSandbox();
-const sendPaymentRequestToApi = require('./4-payment.js');
+const sendPaymentRequestToApi = require('./5-payment.js');
 const Utils = require('./utils.js');
 
 describe('Payment tests', () => {
