@@ -9,26 +9,20 @@ client.on('connect', () => {
   console.log('Redis client connected to the server');
 });
 
-async function setNewSchool(schoolName, value) {
-  try {
-    const setOutput = await setAsync(schoolName, value);
-    console.log(`Reply: ${setOutput}`);
-  } catch (err) {
-    console.error(err);
+client.hset(
+  'HolbertonSchools',
+  'Portland', 50,
+  'Seattle', 80,
+  'New York', 20,
+  'Bogota', 20,
+  'Cali', 40,
+  'Paris', 2,
+  redis.print
+);
+
+client.hgetall('HolbertonSchools', (err, reply) => {
+  if (err) {
+    throw Error(err);
   }
-}
-
-async function displaySchoolValue(schoolName) {
-  try {
-    const schoolValue = await getAsync(schoolName);
-    console.log(schoolValue);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-displaySchoolValue('Holberton');
-
-const newSchool = 'HolbertonSanFrancisco';
-setNewSchool(newSchool, '100');
-displaySchoolValue(newSchool);
+  console.log(reply);
+});
