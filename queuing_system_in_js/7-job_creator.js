@@ -1,5 +1,7 @@
 import kue from 'kue';
 
+const queue = kue.createQueue();
+
 const jobs = [
   {
     phoneNumber: '4153518780',
@@ -47,16 +49,22 @@ const jobs = [
   }
 ];
 
-const queue = kue.createQueue();
+jobs.forEach((jobData) => {
+  const job = queue.createJob('push_notification_code_2', jobData).save((err) => {
+    if (!err) {
+      console.log(`Notification job created: ${job.id}`);
+    }
+  });
 
-const job = queue.create('push_notification_code', jobData).save((err) => {
-  if (!err) {
-    console.log(`Notification job created: ${job.id}`);
-  } else {
-    console.log('Notification job failed');
-  }
-});
+  job.on('failed', (err) => {
+    console.log(`Notification job ${job.id} failed: ${err}`);
+  });
 
-job.on('complete', () => {
-  console.log('Notification job completed');
+  job.on('complete', () => {
+    console.log(`Notification job ${job.id} completed`);
+  });
+
+  job.on('progress', (progress) => {
+    console.log(`Notification job ${job.id} ${progress}% complete`);
+  });
 });
